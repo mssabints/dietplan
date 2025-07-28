@@ -56,8 +56,10 @@
         <p class="mt-4 text-sm text-gray-600">Available at Aldi, Lidl, SuperValu.</p>
       </div>
       <div id="recipe-video" class="tab-content">
-        <p class="text-gray-800 mb-2">Watch a recipe video for this dish:</p>
-        <a id="youtubeLink" href="#" target="_blank" class="text-orange-600 hover:underline"><i class="fa-solid fa-play mr-2"></i>View Recipe Video on YouTube</a>
+        <p class="text-gray-800 mb-2">Watch the recipe video below:</p>
+        <div class="relative w-full" style="aspect-ratio: 16/9;">
+          <iframe id="youtubeIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
         <p class="mt-4 text-sm text-gray-600">Note: Video is a general guide; adapt for low-carb ingredients as needed.</p>
       </div>
       <button id="closeDialog" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
@@ -358,7 +360,7 @@
     const dialog = document.getElementById('shoppingListDialog');
     const dialogTitle = document.getElementById('dialogTitle');
     const shoppingListContent = document.getElementById('shoppingListContent');
-    const youtubeLink = document.getElementById('youtubeLink');
+    const youtubeIframe = document.getElementById('youtubeIframe');
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
     const closeDialogButton = document.getElementById('closeDialog');
@@ -371,8 +373,9 @@
         const mealName = option.textContent.split(':')[0];
         dialogTitle.textContent = mealName;
         shoppingListContent.innerHTML = ingredients.map(ingredient => `<li><i class="fa-solid fa-check text-green-600 mr-2"></i>${ingredient}</li>`).join('');
-        youtubeLink.href = youtubeUrl;
-        youtubeLink.textContent = `View ${mealName} Recipe on YouTube`;
+        // Extract video ID from YouTube URL
+        const videoId = youtubeUrl.match(/(?:v=)([^&]+)/)?.[1] || '1z2C8h2W3vU';
+        youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
         // Show shopping list tab by default
         tabs.forEach(tab => tab.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
@@ -392,13 +395,28 @@
     });
 
     closeDialogButton.addEventListener('click', () => {
+      console.log('Close button clicked');
       dialog.close();
+      youtubeIframe.src = ''; // Reset iframe to stop video
     });
 
     dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) {
+      const dialogDimensions = dialog.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        console.log('Clicked outside dialog');
         dialog.close();
+        youtubeIframe.src = ''; // Reset iframe to stop video
       }
+    });
+
+    dialog.addEventListener('close', () => {
+      console.log('Dialog closed');
+      youtubeIframe.src = ''; // Ensure video stops when dialog closes
     });
   </script>
 </body>
