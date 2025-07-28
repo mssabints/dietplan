@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Low-Carb Diabetic-Friendly Meal Plan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* Modern and smooth design */
+    body {
+      background: linear-gradient(to bottom, #fff7ed, #fef3c7);
+      font-family: 'Inter', sans-serif;
+    }
+    .accordion-button {
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      background: linear-gradient(to right, #fb923c, #f87171);
+    }
+    .accordion-button:hover {
+      background: linear-gradient(to right, #f97316, #ef4444);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .accordion-content {
+      transition: max-height 0.4s ease-out, opacity 0.4s ease, padding 0.4s ease;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0 1.5rem;
+    }
+    .accordion-content.open {
+      max-height: 1200px; /* Adjusted for content */
+      opacity: 1;
+      padding: 1.5rem;
+    }
+    .table-auto th, .table-auto td {
+      border: 1px solid #fed7aa;
+      padding: 0.75rem;
+      transition: background-color 0.3s ease;
+    }
+    .table-auto tr:hover {
+      background-color: #fefcbf;
+    }
+    .table-auto th {
+      background: linear-gradient(to right, #fb923c, #f87171);
+      color: white;
+      font-weight: 600;
+    }
+    .section-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    @media (max-width: 640px) {
+      .table-auto th, .table-auto td {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+      h2 {
+        font-size: 1.25rem;
+      }
+      .accordion-button {
+        font-size: 1rem;
+      }
+    }
+    /* Smooth scroll and fade-in animation */
+    html {
+      scroll-behavior: smooth;
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-in;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="container mx-auto p-6 max-w-6xl">
+    <!-- Header -->
+    <h1 class="text-4xl font-bold text-center text-orange-900 mb-8 drop-shadow-md fade-in">
+      <i class="fa-solid fa-utensils text-orange-600 mr-2"></i> Weekly Low-Carb Meal Plan
+    </h1>
+    
+    <!-- Diabetic Tips and Notes -->
+    <div class="section-container p-6 mb-10 border border-orange-200 fade-in">
+      <h2 class="text-2xl font-semibold text-orange-800 mb-4">
+        <i class="fa-solid fa-heart-pulse text-orange-600 mr-2"></i> Diabetic Tips & Substitutions
+      </h2>
+      <ul class="list-none pl-6 text-gray-800 space-y-3">
+        <li><i class="fa-solid fa-seedling text-green-600 mr-2"></i> <strong>Cauliflower Rice</strong>: Swap white rice with cauliflower rice (pre-riced at Aldi/Lidl or grate fresh). Low-carb, low-GI.</li>
+        <li><i class="fa-solid fa-cheese text-yellow-600 mr-2"></i> <strong>Greek Yogurt</strong>: Use full-fat Greek yogurt instead of curd for more protein, fewer carbs. Available at Aldi, Lidl, SuperValu.</li>
+        <li><i class="fa-solid fa-nut text-brown-600 mr-2"></i> <strong>Almond Flour</strong>: Replace maida with almond flour for baking/coating (health food section at Aldi/Lidl).</li>
+        <li><i class="fa-solid fa-pepper-hot text-red-600 mr-2"></i> <strong>Spices</strong>: Stock turmeric, cumin, coriander, chili powder at Aldi/Lidl for South Indian flavors.</li>
+        <li><i class="fa-solid fa-carrot text-orange-600 mr-2"></i> <strong>Low-GI Veggies</strong>: Choose broccoli, spinach, zucchini, green beans, eggplant (widely available).</li>
+        <li><i class="fa-solid fa-oil-can text-yellow-600 mr-2"></i> <strong>Healthy Fats</strong>: Cook with olive oil, coconut oil, or ghee (moderately), available at all stores.</li>
+        <li><i class="fa-solid fa-egg text-yellow-600 mr-2"></i> <strong>Protein Boost</strong>: Add eggs, chicken, fish, paneer, tofu for satiety, found at Aldi, Lidl, SuperValu.</li>
+        <li><i class="fa-solid fa-balance-scale text-blue-600 mr-2"></i> <strong>Portion Control</strong>: Small carb portions, paired with fiber-rich veggies for blood sugar control.</li>
+        <li><i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i> <strong>Check Labels</strong>: Avoid processed foods with hidden sugars (sauces, ready meals).</li>
+      </ul>
+      <h3 class="text-xl font-semibold text-orange-800 mt-6">
+        <i class="fa-solid fa-clipboard-list text-orange-600 mr-2"></i> Notes
+      </h3>
+      <p class="text-gray-800">
+        Ingredients available at Aldi, Lidl, SuperValu. Recipes use simple techniques (stir-fry, grill, one-pot). Pre-chop veggies or marinate proteins to save time. Adjust chili to taste. Keep carbs low (e.g., 1/4 cup lentils) and focus on non-starchy veggies, proteins for diabetes management.
+      </p>
+    </div>
+
+    <!-- Meal Plan Accordion -->
+    <div class="space-y-4">
+      <!-- Monday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Monday
+        </button>
+        <div class="accordion-content section-container">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Spinach and Paneer Omelette: Eggs, paneer cubes, spinach, green chilies, turmeric, cooked in olive oil. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2">Masala Chicken Scramble: Scrambled eggs with shredded chicken, onions, tomatoes, cumin, chili powder. Pair with cucumber slices.</td>
+                <td class="px-4 py-2">Chia Seed Pudding: Chia seeds soaked in unsweetened almond milk, topped with crushed almonds, cinnamon.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Cauliflower Rice Vegetable Pulao: Cauliflower rice, green beans, carrots, peas, spiced with cumin, coriander, garam masala. Serve with raita (Greek yogurt, cucumber, mint).</td>
+                <td class="px-4 py-2">Spicy Chicken Curry with Zucchini: Chicken breast, zucchini, coconut milk, curry leaves, chili, turmeric. Serve with side salad (lettuce, cucumber, olive oil).</td>
+                <td class="px-4 py-2">Lentil and Spinach Soup: Red lentils, spinach, garlic, ginger, chili, in vegetable stock. Pair with boiled egg (optional).</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Eggplant Masala: Roasted eggplant, tomatoes, onions, South Indian spices. Serve with sautéed broccoli.</td>
+                <td class="px-4 py-2">Grilled Salmon with Indian Spices: Salmon fillet marinated with turmeric, chili, lemon, grilled. Serve with steamed green beans.</td>
+                <td class="px-4 py-2">Tofu and Mushroom Stir-Fry: Tofu cubes, mushrooms, bell peppers, soy sauce, chili flakes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Tuesday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Tuesday
+        </button>
+        <div class="accordion-content section-container hidden">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Masala Oats with Veggies: Steel-cut oats (small portion), zucchini, spinach, South Indian spices. Top with Greek yogurt.</td>
+                <td class="px-4 py-2">Spicy Chicken Sausage Patties: Ground chicken, chili, coriander, fennel seeds. Serve with avocado slices.</td>
+                <td class="px-4 py-2">Almond Flour Pancakes: Almond flour, eggs, cardamom. Serve with Greek yogurt.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Paneer Tikka Salad: Grilled paneer, bell peppers, onions, yogurt marinade, chaat masala. Serve on lettuce.</td>
+                <td class="px-4 py-2">Fish Moilee (Kerala Style): Cod/haddock, coconut milk, green chilies, ginger, curry leaves. Serve with cauliflower mash.</td>
+                <td class="px-4 py-2">Chickpea and Spinach Curry: Chickpeas, spinach, tomatoes, spices, coconut oil. Pair with cucumber.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Cabbage Thoran: Shredded cabbage, coconut, mustard seeds, green chilies, stir-fried. Optional boiled egg.</td>
+                <td class="px-4 py-2">Tandoori Chicken Skewers: Chicken thighs, yogurt, garam masala, chili, grilled. Serve with roasted zucchini.</td>
+                <td class="px-4 py-2">Broccoli and Almond Soup: Broccoli soup, almond flour thickener, garlic, black pepper.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Wednesday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Wednesday
+        </button>
+        <div class="accordion-content section-container hidden">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Vegetable Upma (Almond Flour): Almond flour upma, green beans, carrots, mustard seeds. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2">Spicy Egg Bhurji: Scrambled eggs, onions, tomatoes, green chilies, cilantro. Pair with avocado.</td>
+                <td class="px-4 py-2">Greek Yogurt Smoothie: Greek yogurt, spinach, berries (frozen), pinch of stevia.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Zucchini and Paneer Curry: Zucchini, paneer, tomatoes, South Indian spices, coconut milk. Serve with side salad.</td>
+                <td class="px-4 py-2">Lamb Kheema with Cauliflower Rice: Minced lamb, cauliflower rice, peas, cumin, chili.</td>
+                <td class="px-4 py-2">Mixed Vegetable Sambar: Eggplant, green beans, drumsticks, served with Greek yogurt.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Stuffed Bell Peppers: Bell peppers stuffed with spiced cauliflower, paneer, baked.</td>
+                <td class="px-4 py-2">Grilled Prawns with Garlic and Chili: Prawns, garlic, chili, lemon, grilled. Serve with sautéed spinach.</td>
+                <td class="px-4 py-2">Mushroom and Spinach Masala: Mushrooms, spinach, tomatoes, garam masala, ginger.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Thursday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Thursday
+        </button>
+        <div class="accordion-content section-container hidden">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Coconut Flour Dosa: Dosa made with coconut flour, served with coconut chutney (coconut, green chili, ginger).</td>
+                <td class="px-4 py-2">Chicken Keema Paratha (Almond Flour): Almond flour flatbread, spiced minced chicken. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2">Avocado and Egg Salad: Mashed avocado, boiled eggs, green chilies, cilantro, on lettuce leaves.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Palak Paneer: Spinach, paneer curry, garlic, ginger, green chilies. Serve with cauliflower rice.</td>
+                <td class="px-4 py-2">Spicy Chicken Lettuce Wraps: Minced chicken, South Indian spices, wrapped in lettuce, yogurt dip.</td>
+                <td class="px-4 py-2">Vegetable Korma: Broccoli, cauliflower, green beans, creamy coconut milk sauce, mild spices.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Green Bean Poriyal: Green beans, coconut, mustard seeds, dried red chilies, stir-fried.</td>
+                <td class="px-4 py-2">Coconut Fish Curry: White fish, coconut milk, tamarind, curry leaves, chili. Serve with roasted eggplant.</td>
+                <td class="px-4 py-2">Tofu Tikka Masala: Tofu cubes, spicy tomato sauce, bell peppers, onions.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Friday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Friday
+        </button>
+        <div class="accordion-content section-container hidden">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Spiced Tofu Scramble: Crumbled tofu, onions, tomatoes, turmeric, chili powder. Serve with cucumber.</td>
+                <td class="px-4 py-2">Chicken and Spinach Frittata: Eggs, shredded chicken, spinach, chili, baked.</td>
+                <td class="px-4 py-2">Coconut Milk Chia Pudding: Chia seeds, coconut milk, walnuts, cardamom.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Cauliflower and Broccoli Bhaji: Cauliflower, broccoli, tomatoes, South Indian spices, stir-fried. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2">Mutton Curry (Low-Carb): Mutton, spinach, coconut milk, spices. Serve with cucumber raita.</td>
+                <td class="px-4 py-2">Lentil and Zucchini Stew: Red lentils, zucchini, spices, vegetable stock, optional boiled egg.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Mushroom Pepper Fry: Mushrooms, black pepper, curry leaves, onions, stir-fried.</td>
+                <td class="px-4 py-2">Grilled Chicken with Indian Marinade: Chicken breast, yogurt, turmeric, chili, grilled. Serve with green beans.</td>
+                <td class="px-4 py-2">Spinach and Feta Salad: Spinach, feta, cherry tomatoes, olive oil, chaat masala.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Saturday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Saturday
+        </button>
+        <div class="accordion-content section-container hidden">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Vegetable Omelette: Eggs, mushrooms, bell peppers, onions, green chilies. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2">Spicy Chicken Mince Patties: Ground chicken, ginger, garlic, chili, pan-fried. Serve with avocado.</td>
+                <td class="px-4 py-2">Almond Flour Muffins: Almond flour, eggs, stevia, cardamom.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Eggplant and Tofu Curry: Eggplant, tofu, coconut milk, South Indian spices.</td>
+                <td class="px-4 py-2">Kerala Prawn Curry: Prawns, coconut milk, curry leaves, chili, tamarind. Serve with cauliflower rice.</td>
+                <td class="px-4 py-2">Chickpea and Cauliflower Masala: Chickpeas, cauliflower, spicy tomato sauce.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Cabbage and Carrot Thoran: Cabbage, carrots, coconut, spices, stir-fried.</td>
+                <td class="px-4 py-2">Spicy Grilled Lamb Chops: Lamb chops, chili, garlic, garam masala, grilled. Serve with roasted broccoli.</td>
+                <td class="px-4 py-2">Zucchini Noodles with Pesto: Zucchini noodles, homemade pesto (basil, olive oil, almonds).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Sunday -->
+      <div class="accordion fade-in">
+        <button class="accordion-button w-full text-left p-4 font-semibold text-lg text-white rounded-lg shadow-md">
+          <i class="fa-solid fa-calendar-day mr-2"></i> Sunday
+        </button>
+        <div class="accordion-content section-container hidden">
+          <table class="table-auto w-full text-gray-800">
+            <thead>
+              <tr>
+                <th class="px-4 py-2"><i class="fa-solid fa-utensils mr-1"></i> Meal</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-leaf mr-1"></i> Option 1 (Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-drumstick-bite mr-1"></i> Option 2 (Non-Vegetarian)</th>
+                <th class="px-4 py-2"><i class="fa-solid fa-bowl-food mr-1"></i> Option 3 (Vegetarian/Non-Veg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Breakfast</td>
+                <td class="px-4 py-2">Masala Tofu Bhurji: Crumbled tofu, onions, tomatoes, South Indian spices. Serve with cucumber slices.</td>
+                <td class="px-4 py-2">Salmon and Egg Scramble: Scrambled eggs, flaked salmon, dill, chili flakes.</td>
+                <td class="px-4 py-2">Greek Yogurt with Nuts and Seeds: Greek yogurt, almonds, pumpkin seeds, cinnamon.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Lunch</td>
+                <td class="px-4 py-2">Spinach and Mushroom Korma: Spinach, mushrooms, coconut milk, mild spices. Serve with side salad.</td>
+                <td class="px-4 py-2">Chicken Chettinad: Chicken, Chettinad spices, coconut milk, curry leaves. Serve with cauliflower mash.</td>
+                <td class="px-4 py-2">Vegetable and Lentil Curry: Green beans, zucchini, red lentils, coconut-based sauce.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold">Dinner</td>
+                <td class="px-4 py-2">Broccoli Poriyal: Broccoli, coconut, mustard seeds, dried chilies, stir-fried.</td>
+                <td class="px-4 py-2">Fish Fry (South Indian Style): White fish, turmeric, chili powder, lemon, pan-fried. Serve with sautéed spinach.</td>
+                <td class="px-4 py-2">Paneer and Bell Pepper Stir-Fry: Paneer, bell peppers, onions, soy sauce, chili flakes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for smooth accordion functionality
+    const buttons = document.querySelectorAll('.accordion-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const isOpen = !content.classList.contains('hidden');
+        // Close all other accordions
+        document.querySelectorAll('.accordion-content').forEach(c => {
+          c.classList.add('hidden');
+          c.classList.remove('open');
+        });
+        // Toggle current accordion
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          content.classList.add('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
