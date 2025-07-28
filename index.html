@@ -38,7 +38,7 @@
       </p>
     </div>
 
-    <!-- Shopping List and Video Dialog -->
+    <!-- Shopping List and Recipe Instructions Dialog -->
     <dialog id="shoppingListDialog" class="p-6">
       <h2 class="text-2xl font-semibold text-orange-800 mb-4">
         <i class="fa-solid fa-utensils text-orange-600 mr-2"></i> <span id="dialogTitle"></span>
@@ -47,20 +47,18 @@
         <button class="tab active" data-tab="shopping-list">
           <i class="fa-solid fa-shopping-cart mr-2"></i> Shopping List
         </button>
-        <button class="tab" data-tab="recipe-video">
-          <i class="fa-solid fa-video mr-2"></i> Recipe Video
+        <button class="tab" data-tab="recipe-instructions">
+          <i class="fa-solid fa-book-open mr-2"></i> Recipe Instructions
         </button>
       </div>
       <div id="shopping-list" class="tab-content active">
         <ul id="shoppingListContent" class="list-disc pl-6 space-y-1 text-gray-800"></ul>
         <p class="mt-4 text-sm text-gray-600">Available at Aldi, Lidl, SuperValu.</p>
       </div>
-      <div id="recipe-video" class="tab-content">
-        <p class="text-gray-800 mb-2">Watch the recipe video below:</p>
-        <div class="relative w-full" style="aspect-ratio: 16/9;">
-          <iframe id="youtubeIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <p class="mt-4 text-sm text-gray-600">Note: Video is a general guide; adapt for low-carb ingredients as needed.</p>
+      <div id="recipe-instructions" class="tab-content">
+        <p class="text-gray-800 mb-2">Follow these steps to prepare the recipe:</p>
+        <div id="recipeInstructions" class="space-y-2 text-gray-800"></div>
+        <p class="mt-4 text-sm text-gray-600">Note: Adjust cooking times and spice levels to taste. Keep portions low-carb for diabetes management.</p>
       </div>
       <button id="closeDialog" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
         Close
@@ -356,11 +354,11 @@
       });
     });
 
-    // Shopping list and video dialog functionality
+    // Shopping list and recipe instructions dialog functionality
     const dialog = document.getElementById('shoppingListDialog');
     const dialogTitle = document.getElementById('dialogTitle');
     const shoppingListContent = document.getElementById('shoppingListContent');
-    const youtubeIframe = document.getElementById('youtubeIframe');
+    const recipeInstructions = document.getElementById('recipeInstructions');
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
     const closeDialogButton = document.getElementById('closeDialog');
@@ -369,13 +367,69 @@
     mealOptions.forEach(option => {
       option.addEventListener('click', () => {
         const ingredients = option.getAttribute('data-ingredients').split(', ');
-        const youtubeUrl = option.getAttribute('data-youtube');
         const mealName = option.textContent.split(':')[0];
         dialogTitle.textContent = mealName;
         shoppingListContent.innerHTML = ingredients.map(ingredient => `<li><i class="fa-solid fa-check text-green-600 mr-2"></i>${ingredient}</li>`).join('');
-        // Extract video ID from YouTube URL
-        const videoId = youtubeUrl.match(/(?:v=)([^&]+)/)?.[1] || '1z2C8h2W3vU';
-        youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
+        
+        // Generate recipe instructions based on meal type
+        let instructions = [];
+        if (mealName.toLowerCase().includes('omelette') || mealName.toLowerCase().includes('scramble')) {
+          instructions = [
+            'Beat eggs in a bowl.',
+            'Heat olive oil in a pan, add vegetables and spices, sauté for 2-3 minutes.',
+            'Add egg mixture, cook until set, flipping if needed.',
+            'Serve with yogurt or side dish.'
+          ];
+        } else if (mealName.toLowerCase().includes('curry') || mealName.toLowerCase().includes('masala')) {
+          instructions = [
+            'Heat oil in a pan, add spices and onions, sauté until golden.',
+            'Add vegetables or protein, cook for 5-7 minutes.',
+            'Stir in coconut milk or tomatoes, simmer for 10-15 minutes.',
+            'Serve with cauliflower rice or salad.'
+          ];
+        } else if (mealName.toLowerCase().includes('soup') || mealName.toLowerCase().includes('stew')) {
+          instructions = [
+            'Heat oil in a pot, sauté garlic, ginger, and spices.',
+            'Add lentils or vegetables, cook for 5 minutes.',
+            'Pour in vegetable stock, simmer for 15-20 minutes.',
+            'Serve with optional egg or side.'
+          ];
+        } else if (mealName.toLowerCase().includes('pudding') || mealName.toLowerCase().includes('smoothie')) {
+          instructions = [
+            'Mix chia seeds or yogurt with almond milk in a bowl or blender.',
+            'Add berries or nuts, stir or blend until combined.',
+            'Let sit for 10 minutes (for pudding) or serve immediately (for smoothie).',
+            'Top with cinnamon or seeds.'
+          ];
+        } else if (mealName.toLowerCase().includes('salad') || mealName.toLowerCase().includes('wraps')) {
+          instructions = [
+            'Prepare vegetables and protein, chop as needed.',
+            'Mix with yogurt or oil-based dressing in a bowl.',
+            'Assemble in lettuce leaves or serve as a salad.',
+            'Season with spices or herbs.'
+          ];
+        } else if (mealName.toLowerCase().includes('stir-fry') || mealName.toLowerCase().includes('poriyal')) {
+          instructions = [
+            'Heat oil in a pan, add mustard seeds and curry leaves, let them pop.',
+            'Add vegetables, sauté for 5-7 minutes.',
+            'Stir in coconut or spices, cook until tender.',
+            'Serve hot.'
+          ];
+        } else if (mealName.toLowerCase().includes('grill') || mealName.toLowerCase().includes('fry')) {
+          instructions = [
+            'Marinate protein with spices and yogurt or oil for 15-30 minutes.',
+            'Preheat grill or pan, cook protein for 5-7 minutes per side.',
+            'Serve with steamed vegetables or side salad.'
+          ];
+        } else {
+          instructions = [
+            'Prepare ingredients as listed.',
+            'Cook in a pan with oil and spices for 10-15 minutes.',
+            'Adjust seasoning, serve with a low-carb side.'
+          ];
+        }
+        recipeInstructions.innerHTML = instructions.map((step, index) => `<li class="pl-2">Step ${index + 1}: ${step}</li>`).join('');
+
         // Show shopping list tab by default
         tabs.forEach(tab => tab.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
@@ -397,7 +451,6 @@
     closeDialogButton.addEventListener('click', () => {
       console.log('Close button clicked');
       dialog.close();
-      youtubeIframe.src = ''; // Reset iframe to stop video
     });
 
     dialog.addEventListener('click', (e) => {
@@ -410,13 +463,11 @@
       ) {
         console.log('Clicked outside dialog');
         dialog.close();
-        youtubeIframe.src = ''; // Reset iframe to stop video
       }
     });
 
     dialog.addEventListener('close', () => {
       console.log('Dialog closed');
-      youtubeIframe.src = ''; // Ensure video stops when dialog closes
     });
   </script>
 </body>
