@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles from the original HTML */
+body {
+  background: linear-gradient(to bottom, #fff7ed, #fef3c7);
+}
+.accordion-button {
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  background: linear-gradient(to right, #fb923c, #f87171);
+}
+.accordion-button:hover {
+  background: linear-gradient(to right, #f97316, #ef4444);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.accordion-content {
+  transition: max-height 0.4s ease-out, opacity 0.4s ease, padding 0.4s ease;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1.5rem;
+}
+.accordion-content.open {
+  max-height: 1200px;
+  opacity: 1;
+  padding: 1.5rem;
+}
+.table-auto th, .table-auto td {
+  border: 1px solid #fed7aa;
+  padding: 0.75rem;
+  transition: background-color 0.3s ease;
+}
+.table-auto tr:hover {
+  background-color: #fefcbf;
+}
+.table-auto th {
+  background: linear-gradient(to right, #fb923c, #f87171);
+  color: white;
+  font-weight: 600;
+}
+.meal-option {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.meal-option:hover {
+  background-color: #fef9c3;
+}
+.section-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+dialog {
+  border: none;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+  width: 600px;
+  padding: 1.5rem;
+  animation: slideIn 0.3s ease;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+.tab {
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: #f3f4f6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.tab.active {
+  background: linear-gradient(to right, #fb923c, #f87171);
+  color: white;
+}
+.tab:hover {
+  background: #e5e7eb;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@media (max-width: 640px) {
+  .table-auto th, .table-auto td {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  .accordion-button {
+    font-size: 1rem;
+  }
+  dialog {
+    width: 95%;
+    padding: 1rem;
+  }
+  .tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+.fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

@@ -4,80 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weekly Low-Carb Diabetic-Friendly Meal Plan</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <style>
-    /* Modern and smooth design */
-    body {
-      background: linear-gradient(to bottom, #fff7ed, #fef3c7);
-      font-family: 'Inter', sans-serif;
-    }
-    .accordion-button {
-      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      background: linear-gradient(to right, #fb923c, #f87171);
-    }
-    .accordion-button:hover {
-      background: linear-gradient(to right, #f97316, #ef4444);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .accordion-content {
-      transition: max-height 0.4s ease-out, opacity 0.4s ease, padding 0.4s ease;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      padding: 0 1.5rem;
-    }
-    .accordion-content.open {
-      max-height: 1200px; /* Adjusted for content */
-      opacity: 1;
-      padding: 1.5rem;
-    }
-    .table-auto th, .table-auto td {
-      border: 1px solid #fed7aa;
-      padding: 0.75rem;
-      transition: background-color 0.3s ease;
-    }
-    .table-auto tr:hover {
-      background-color: #fefcbf;
-    }
-    .table-auto th {
-      background: linear-gradient(to right, #fb923c, #f87171);
-      color: white;
-      font-weight: 600;
-    }
-    .section-container {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-    @media (max-width: 640px) {
-      .table-auto th, .table-auto td {
-        font-size: 0.8rem;
-        padding: 0.5rem;
-      }
-      h1 {
-        font-size: 1.75rem;
-      }
-      h2 {
-        font-size: 1.25rem;
-      }
-      .accordion-button {
-        font-size: 1rem;
-      }
-    }
-    /* Smooth scroll and fade-in animation */
-    html {
-      scroll-behavior: smooth;
-    }
-    .fade-in {
-      animation: fadeIn 0.8s ease-in;
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  </style>
 </head>
 <body class="min-h-screen">
   <div class="container mx-auto p-6 max-w-6xl">
@@ -110,6 +38,33 @@
       </p>
     </div>
 
+    <!-- Shopping List and Video Dialog -->
+    <dialog id="shoppingListDialog" class="p-6">
+      <h2 class="text-2xl font-semibold text-orange-800 mb-4">
+        <i class="fa-solid fa-utensils text-orange-600 mr-2"></i> <span id="dialogTitle"></span>
+      </h2>
+      <div class="flex border-b border-gray-200 mb-4">
+        <button class="tab active" data-tab="shopping-list">
+          <i class="fa-solid fa-shopping-cart mr-2"></i> Shopping List
+        </button>
+        <button class="tab" data-tab="recipe-video">
+          <i class="fa-solid fa-video mr-2"></i> Recipe Video
+        </button>
+      </div>
+      <div id="shopping-list" class="tab-content active">
+        <ul id="shoppingListContent" class="list-disc pl-6 space-y-1 text-gray-800"></ul>
+        <p class="mt-4 text-sm text-gray-600">Available at Aldi, Lidl, SuperValu.</p>
+      </div>
+      <div id="recipe-video" class="tab-content">
+        <p class="text-gray-800 mb-2">Watch a recipe video for this dish:</p>
+        <a id="youtubeLink" href="#" target="_blank" class="text-orange-600 hover:underline"><i class="fa-solid fa-play mr-2"></i>View Recipe Video on YouTube</a>
+        <p class="mt-4 text-sm text-gray-600">Note: Video is a general guide; adapt for low-carb ingredients as needed.</p>
+      </div>
+      <button id="closeDialog" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+        Close
+      </button>
+    </dialog>
+
     <!-- Meal Plan Accordion -->
     <div class="space-y-4">
       <!-- Monday -->
@@ -130,21 +85,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Spinach and Paneer Omelette: Eggs, paneer cubes, spinach, green chilies, turmeric, cooked in olive oil. Serve with Greek yogurt.</td>
-                <td class="px-4 py-2">Masala Chicken Scramble: Scrambled eggs with shredded chicken, onions, tomatoes, cumin, chili powder. Pair with cucumber slices.</td>
-                <td class="px-4 py-2">Chia Seed Pudding: Chia seeds soaked in unsweetened almond milk, topped with crushed almonds, cinnamon.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggs, paneer, spinach, green chilies, turmeric, olive oil, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spinach and Paneer Omelette: Eggs, paneer cubes, spinach, green chilies, turmeric, cooked in olive oil. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggs, chicken breast, onions, tomatoes, cumin, chili powder, cucumber" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Masala Chicken Scramble: Scrambled eggs with shredded chicken, onions, tomatoes, cumin, chili powder. Pair with cucumber slices.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chia seeds, unsweetened almond milk, almonds, cinnamon" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Chia Seed Pudding: Chia seeds soaked in unsweetened almond milk, topped with crushed almonds, cinnamon.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Cauliflower Rice Vegetable Pulao: Cauliflower rice, green beans, carrots, peas, spiced with cumin, coriander, garam masala. Serve with raita (Greek yogurt, cucumber, mint).</td>
-                <td class="px-4 py-2">Spicy Chicken Curry with Zucchini: Chicken breast, zucchini, coconut milk, curry leaves, chili, turmeric. Serve with side salad (lettuce, cucumber, olive oil).</td>
-                <td class="px-4 py-2">Lentil and Spinach Soup: Red lentils, spinach, garlic, ginger, chili, in vegetable stock. Pair with boiled egg (optional).</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Cauliflower, green beans, carrots, peas, cumin, coriander, garam masala, Greek yogurt, cucumber, mint" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Cauliflower Rice Vegetable Pulao: Cauliflower rice, green beans, carrots, peas, spiced with cumin, coriander, garam masala. Serve with raita (Greek yogurt, cucumber, mint).</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chicken breast, zucchini, coconut milk, curry leaves, chili, turmeric, lettuce, cucumber, olive oil" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spicy Chicken Curry with Zucchini: Chicken breast, zucchini, coconut milk, curry leaves, chili, turmeric. Serve with side salad (lettuce, cucumber, olive oil).</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Red lentils, spinach, garlic, ginger, chili, vegetable stock, egg (optional)" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Lentil and Spinach Soup: Red lentils, spinach, garlic, ginger, chili, in vegetable stock. Pair with boiled egg (optional).</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Eggplant Masala: Roasted eggplant, tomatoes, onions, South Indian spices. Serve with sautéed broccoli.</td>
-                <td class="px-4 py-2">Grilled Salmon with Indian Spices: Salmon fillet marinated with turmeric, chili, lemon, grilled. Serve with steamed green beans.</td>
-                <td class="px-4 py-2">Tofu and Mushroom Stir-Fry: Tofu cubes, mushrooms, bell peppers, soy sauce, chili flakes.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggplant, tomatoes, onions, garam masala, turmeric, broccoli, olive oil" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Eggplant Masala: Roasted eggplant, tomatoes, onions, South Indian spices. Serve with sautéed broccoli.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Salmon fillet, turmeric, chili, lemon, green beans, olive oil" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Grilled Salmon with Indian Spices: Salmon fillet marinated with turmeric, chili, lemon, grilled. Serve with steamed green beans.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Tofu, mushrooms, bell peppers, soy sauce, chili flakes" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Tofu and Mushroom Stir-Fry: Tofu cubes, mushrooms, bell peppers, soy sauce, chili flakes.</td>
               </tr>
             </tbody>
           </table>
@@ -168,21 +123,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Masala Oats with Veggies: Steel-cut oats (small portion), zucchini, spinach, South Indian spices. Top with Greek yogurt.</td>
-                <td class="px-4 py-2">Spicy Chicken Sausage Patties: Ground chicken, chili, coriander, fennel seeds. Serve with avocado slices.</td>
-                <td class="px-4 py-2">Almond Flour Pancakes: Almond flour, eggs, cardamom. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Steel-cut oats, zucchini, spinach, cumin, coriander, chili powder, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Masala Oats with Veggies: Steel-cut oats (small portion), zucchini, spinach, South Indian spices. Top with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Ground chicken, chili, coriander, fennel seeds, avocado" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spicy Chicken Sausage Patties: Ground chicken, chili, coriander, fennel seeds. Serve with avocado slices.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Almond flour, eggs, cardamom, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Almond Flour Pancakes: Almond flour, eggs, cardamom. Serve with Greek yogurt.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Paneer Tikka Salad: Grilled paneer, bell peppers, onions, yogurt marinade, chaat masala. Serve on lettuce.</td>
-                <td class="px-4 py-2">Fish Moilee (Kerala Style): Cod/haddock, coconut milk, green chilies, ginger, curry leaves. Serve with cauliflower mash.</td>
-                <td class="px-4 py-2">Chickpea and Spinach Curry: Chickpeas, spinach, tomatoes, spices, coconut oil. Pair with cucumber.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Paneer, bell peppers, onions, Greek yogurt, chaat masala, lettuce" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Paneer Tikka Salad: Grilled paneer, bell peppers, onions, yogurt marinade, chaat masala. Serve on lettuce.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Cod or haddock, coconut milk, green chilies, ginger, curry leaves, cauliflower" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Fish Moilee (Kerala Style): Cod/haddock, coconut milk, green chilies, ginger, curry leaves. Serve with cauliflower mash.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chickpeas, spinach, tomatoes, coconut oil, cumin, coriander" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Chickpea and Spinach Curry: Chickpeas, spinach, tomatoes, spices, coconut oil. Pair with cucumber.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Cabbage Thoran: Shredded cabbage, coconut, mustard seeds, green chilies, stir-fried. Optional boiled egg.</td>
-                <td class="px-4 py-2">Tandoori Chicken Skewers: Chicken thighs, yogurt, garam masala, chili, grilled. Serve with roasted zucchini.</td>
-                <td class="px-4 py-2">Broccoli and Almond Soup: Broccoli soup, almond flour thickener, garlic, black pepper.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Cabbage, coconut, mustard seeds, green chilies, egg (optional)" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Cabbage Thoran: Shredded cabbage, coconut, mustard seeds, green chilies, stir-fried. Optional boiled egg.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chicken thighs, Greek yogurt, garam masala, chili, zucchini" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Tandoori Chicken Skewers: Chicken thighs, yogurt, garam masala, chili, grilled. Serve with roasted zucchini.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Broccoli, almond flour, garlic, black pepper, vegetable stock" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Broccoli and Almond Soup: Broccoli soup, almond flour thickener, garlic, black pepper.</td>
               </tr>
             </tbody>
           </table>
@@ -206,21 +161,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Vegetable Upma (Almond Flour): Almond flour upma, green beans, carrots, mustard seeds. Serve with Greek yogurt.</td>
-                <td class="px-4 py-2">Spicy Egg Bhurji: Scrambled eggs, onions, tomatoes, green chilies, cilantro. Pair with avocado.</td>
-                <td class="px-4 py-2">Greek Yogurt Smoothie: Greek yogurt, spinach, berries (frozen), pinch of stevia.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Almond flour, green beans, carrots, mustard seeds, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Vegetable Upma (Almond Flour): Almond flour upma, green beans, carrots, mustard seeds. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggs, onions, tomatoes, green chilies, cilantro, avocado" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spicy Egg Bhurji: Scrambled eggs, onions, tomatoes, green chilies, cilantro. Pair with avocado.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Greek yogurt, spinach, frozen berries, stevia" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Greek Yogurt Smoothie: Greek yogurt, spinach, berries (frozen), pinch of stevia.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Zucchini and Paneer Curry: Zucchini, paneer, tomatoes, South Indian spices, coconut milk. Serve with side salad.</td>
-                <td class="px-4 py-2">Lamb Kheema with Cauliflower Rice: Minced lamb, cauliflower rice, peas, cumin, chili.</td>
-                <td class="px-4 py-2">Mixed Vegetable Sambar: Eggplant, green beans, drumsticks, served with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Zucchini, paneer, tomatoes, cumin, coriander, coconut milk, lettuce" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Zucchini and Paneer Curry: Zucchini, paneer, tomatoes, South Indian spices, coconut milk. Serve with side salad.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Minced lamb, cauliflower, peas, cumin, chili" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Lamb Kheema with Cauliflower Rice: Minced lamb, cauliflower rice, peas, cumin, chili.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggplant, green beans, drumsticks, Greek yogurt, tamarind" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Mixed Vegetable Sambar: Eggplant, green beans, drumsticks, served with Greek yogurt.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Stuffed Bell Peppers: Bell peppers stuffed with spiced cauliflower, paneer, baked.</td>
-                <td class="px-4 py-2">Grilled Prawns with Garlic and Chili: Prawns, garlic, chili, lemon, grilled. Serve with sautéed spinach.</td>
-                <td class="px-4 py-2">Mushroom and Spinach Masala: Mushrooms, spinach, tomatoes, garam masala, ginger.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Bell peppers, cauliflower, paneer, garam masala" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Stuffed Bell Peppers: Bell peppers stuffed with spiced cauliflower, paneer, baked.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Prawns, garlic, chili, lemon, spinach, olive oil" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Grilled Prawns with Garlic and Chili: Prawns, garlic, chili, lemon, grilled. Serve with sautéed spinach.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Mushrooms, spinach, tomatoes, garam masala, ginger" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Mushroom and Spinach Masala: Mushrooms, spinach, tomatoes, garam masala, ginger.</td>
               </tr>
             </tbody>
           </table>
@@ -244,21 +199,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Coconut Flour Dosa: Dosa made with coconut flour, served with coconut chutney (coconut, green chili, ginger).</td>
-                <td class="px-4 py-2">Chicken Keema Paratha (Almond Flour): Almond flour flatbread, spiced minced chicken. Serve with Greek yogurt.</td>
-                <td class="px-4 py-2">Avocado and Egg Salad: Mashed avocado, boiled eggs, green chilies, cilantro, on lettuce leaves.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Coconut flour, coconut, green chili, ginger" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Coconut Flour Dosa: Dosa made with coconut flour, served with coconut chutney (coconut, green chili, ginger).</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Almond flour, minced chicken, ginger, garlic, chili, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Chicken Keema Paratha (Almond Flour): Almond flour flatbread, spiced minced chicken. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Avocado, eggs, green chilies, cilantro, lettuce" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Avocado and Egg Salad: Mashed avocado, boiled eggs, green chilies, cilantro, on lettuce leaves.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Palak Paneer: Spinach, paneer curry, garlic, ginger, green chilies. Serve with cauliflower rice.</td>
-                <td class="px-4 py-2">Spicy Chicken Lettuce Wraps: Minced chicken, South Indian spices, wrapped in lettuce, yogurt dip.</td>
-                <td class="px-4 py-2">Vegetable Korma: Broccoli, cauliflower, green beans, creamy coconut milk sauce, mild spices.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Spinach, paneer, garlic, ginger, green chilies, cauliflower" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Palak Paneer: Spinach, paneer curry, garlic, ginger, green chilies. Serve with cauliflower rice.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Minced chicken, lettuce, Greek yogurt, cumin, coriander, chili" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spicy Chicken Lettuce Wraps: Minced chicken, South Indian spices, wrapped in lettuce, yogurt dip.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Broccoli, cauliflower, green beans, coconut milk, cumin, coriander" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Vegetable Korma: Broccoli, cauliflower, green beans, creamy coconut milk sauce, mild spices.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Green Bean Poriyal: Green beans, coconut, mustard seeds, dried red chilies, stir-fried.</td>
-                <td class="px-4 py-2">Coconut Fish Curry: White fish, coconut milk, tamarind, curry leaves, chili. Serve with roasted eggplant.</td>
-                <td class="px-4 py-2">Tofu Tikka Masala: Tofu cubes, spicy tomato sauce, bell peppers, onions.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Green beans, coconut, mustard seeds, dried red chilies" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Green Bean Poriyal: Green beans, coconut, mustard seeds, dried red chilies, stir-fried.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="White fish, coconut milk, tamarind, curry leaves, chili, eggplant" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Coconut Fish Curry: White fish, coconut milk, tamarind, curry leaves, chili. Serve with roasted eggplant.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Tofu, tomatoes, bell peppers, onions, garam masala" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Tofu Tikka Masala: Tofu cubes, spicy tomato sauce, bell peppers, onions.</td>
               </tr>
             </tbody>
           </table>
@@ -282,21 +237,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Spiced Tofu Scramble: Crumbled tofu, onions, tomatoes, turmeric, chili powder. Serve with cucumber.</td>
-                <td class="px-4 py-2">Chicken and Spinach Frittata: Eggs, shredded chicken, spinach, chili, baked.</td>
-                <td class="px-4 py-2">Coconut Milk Chia Pudding: Chia seeds, coconut milk, walnuts, cardamom.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Tofu, onions, tomatoes, turmeric, chili powder, cucumber" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spiced Tofu Scramble: Crumbled tofu, onions, tomatoes, turmeric, chili powder. Serve with cucumber.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggs, chicken breast, spinach, chili" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Chicken and Spinach Frittata: Eggs, shredded chicken, spinach, chili, baked.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chia seeds, coconut milk, walnuts, cardamom" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Coconut Milk Chia Pudding: Chia seeds, coconut milk, walnuts, cardamom.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Cauliflower and Broccoli Bhaji: Cauliflower, broccoli, tomatoes, South Indian spices, stir-fried. Serve with Greek yogurt.</td>
-                <td class="px-4 py-2">Mutton Curry (Low-Carb): Mutton, spinach, coconut milk, spices. Serve with cucumber raita.</td>
-                <td class="px-4 py-2">Lentil and Zucchini Stew: Red lentils, zucchini, spices, vegetable stock, optional boiled egg.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Cauliflower, broccoli, tomatoes, cumin, coriander, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Cauliflower and Broccoli Bhaji: Cauliflower, broccoli, tomatoes, South Indian spices, stir-fried. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Mutton, spinach, coconut milk, cumin, chili, cucumber, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Mutton Curry (Low-Carb): Mutton, spinach, coconut milk, spices. Serve with cucumber raita.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Red lentils, zucchini, cumin, coriander, vegetable stock, egg (optional)" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Lentil and Zucchini Stew: Red lentils, zucchini, spices, vegetable stock, optional boiled egg.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Mushroom Pepper Fry: Mushrooms, black pepper, curry leaves, onions, stir-fried.</td>
-                <td class="px-4 py-2">Grilled Chicken with Indian Marinade: Chicken breast, yogurt, turmeric, chili, grilled. Serve with green beans.</td>
-                <td class="px-4 py-2">Spinach and Feta Salad: Spinach, feta, cherry tomatoes, olive oil, chaat masala.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Mushrooms, black pepper, curry leaves, onions" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Mushroom Pepper Fry: Mushrooms, black pepper, curry leaves, onions, stir-fried.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chicken breast, Greek yogurt, turmeric, chili, green beans" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Grilled Chicken with Indian Marinade: Chicken breast, yogurt, turmeric, chili, grilled. Serve with green beans.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Spinach, feta cheese, cherry tomatoes, olive oil, chaat masala" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spinach and Feta Salad: Spinach, feta, cherry tomatoes, olive oil, chaat masala.</td>
               </tr>
             </tbody>
           </table>
@@ -320,21 +275,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Vegetable Omelette: Eggs, mushrooms, bell peppers, onions, green chilies. Serve with Greek yogurt.</td>
-                <td class="px-4 py-2">Spicy Chicken Mince Patties: Ground chicken, ginger, garlic, chili, pan-fried. Serve with avocado.</td>
-                <td class="px-4 py-2">Almond Flour Muffins: Almond flour, eggs, stevia, cardamom.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggs, mushrooms, bell peppers, onions, green chilies, Greek yogurt" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Vegetable Omelette: Eggs, mushrooms, bell peppers, onions, green chilies. Serve with Greek yogurt.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Ground chicken, ginger, garlic, chili, avocado" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spicy Chicken Mince Patties: Ground chicken, ginger, garlic, chili, pan-fried. Serve with avocado.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Almond flour, eggs, stevia, cardamom" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Almond Flour Muffins: Almond flour, eggs, stevia, cardamom.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Eggplant and Tofu Curry: Eggplant, tofu, coconut milk, South Indian spices.</td>
-                <td class="px-4 py-2">Kerala Prawn Curry: Prawns, coconut milk, curry leaves, chili, tamarind. Serve with cauliflower rice.</td>
-                <td class="px-4 py-2">Chickpea and Cauliflower Masala: Chickpeas, cauliflower, spicy tomato sauce.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggplant, tofu, coconut milk, cumin, coriander" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Eggplant and Tofu Curry: Eggplant, tofu, coconut milk, South Indian spices.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Prawns, coconut milk, curry leaves, chili, tamarind, cauliflower" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Kerala Prawn Curry: Prawns, coconut milk, curry leaves, chili, tamarind. Serve with cauliflower rice.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chickpeas, cauliflower, tomatoes, garam masala" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Chickpea and Cauliflower Masala: Chickpeas, cauliflower, spicy tomato sauce.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Cabbage and Carrot Thoran: Cabbage, carrots, coconut, spices, stir-fried.</td>
-                <td class="px-4 py-2">Spicy Grilled Lamb Chops: Lamb chops, chili, garlic, garam masala, grilled. Serve with roasted broccoli.</td>
-                <td class="px-4 py-2">Zucchini Noodles with Pesto: Zucchini noodles, homemade pesto (basil, olive oil, almonds).</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Cabbage, carrots, coconut, cumin, mustard seeds" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Cabbage and Carrot Thoran: Cabbage, carrots, coconut, spices, stir-fried.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Lamb chops, chili, garlic, garam masala, broccoli" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spicy Grilled Lamb Chops: Lamb chops, chili, garlic, garam masala, grilled. Serve with roasted broccoli.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Zucchini, basil, olive oil, almonds" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Zucchini Noodles with Pesto: Zucchini noodles, homemade pesto (basil, olive oil, almonds).</td>
               </tr>
             </tbody>
           </table>
@@ -358,21 +313,21 @@
             <tbody>
               <tr>
                 <td class="px-4 py-2 font-semibold">Breakfast</td>
-                <td class="px-4 py-2">Masala Tofu Bhurji: Crumbled tofu, onions, tomatoes, South Indian spices. Serve with cucumber slices.</td>
-                <td class="px-4 py-2">Salmon and Egg Scramble: Scrambled eggs, flaked salmon, dill, chili flakes.</td>
-                <td class="px-4 py-2">Greek Yogurt with Nuts and Seeds: Greek yogurt, almonds, pumpkin seeds, cinnamon.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Tofu, onions, tomatoes, turmeric, chili powder, cucumber" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Masala Tofu Bhurji: Crumbled tofu, onions, tomatoes, South Indian spices. Serve with cucumber slices.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Eggs, salmon, dill, chili flakes" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Salmon and Egg Scramble: Scrambled eggs, flaked salmon, dill, chili flakes.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Greek yogurt, almonds, pumpkin seeds, cinnamon" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Greek Yogurt with Nuts and Seeds: Greek yogurt, almonds, pumpkin seeds, cinnamon.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Lunch</td>
-                <td class="px-4 py-2">Spinach and Mushroom Korma: Spinach, mushrooms, coconut milk, mild spices. Serve with side salad.</td>
-                <td class="px-4 py-2">Chicken Chettinad: Chicken, Chettinad spices, coconut milk, curry leaves. Serve with cauliflower mash.</td>
-                <td class="px-4 py-2">Vegetable and Lentil Curry: Green beans, zucchini, red lentils, coconut-based sauce.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Spinach, mushrooms, coconut milk, cumin, coriander, lettuce" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Spinach and Mushroom Korma: Spinach, mushrooms, coconut milk, mild spices. Serve with side salad.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Chicken, coconut milk, curry leaves, garam masala, cauliflower" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Chicken Chettinad: Chicken, Chettinad spices, coconut milk, curry leaves. Serve with cauliflower mash.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Green beans, zucchini, red lentils, coconut milk, cumin" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Vegetable and Lentil Curry: Green beans, zucchini, red lentils, coconut-based sauce.</td>
               </tr>
               <tr>
                 <td class="px-4 py-2 font-semibold">Dinner</td>
-                <td class="px-4 py-2">Broccoli Poriyal: Broccoli, coconut, mustard seeds, dried chilies, stir-fried.</td>
-                <td class="px-4 py-2">Fish Fry (South Indian Style): White fish, turmeric, chili powder, lemon, pan-fried. Serve with sautéed spinach.</td>
-                <td class="px-4 py-2">Paneer and Bell Pepper Stir-Fry: Paneer, bell peppers, onions, soy sauce, chili flakes.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Broccoli, coconut, mustard seeds, dried red chilies" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Broccoli Poriyal: Broccoli, coconut, mustard seeds, dried chilies, stir-fried.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="White fish, turmeric, chili powder, lemon, spinach" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Fish Fry (South Indian Style): White fish, turmeric, chili powder, lemon, pan-fried. Serve with sautéed spinach.</td>
+                <td class="px-4 py-2 meal-option" data-ingredients="Paneer, bell peppers, onions, soy sauce, chili flakes" data-youtube="https://www.youtube.com/watch?v=1z2C8h2W3vU">Paneer and Bell Pepper Stir-Fry: Paneer, bell peppers, onions, soy sauce, chili flakes.</td>
               </tr>
             </tbody>
           </table>
@@ -382,23 +337,68 @@
   </div>
 
   <script>
-    // JavaScript for smooth accordion functionality
+    // Accordion functionality
     const buttons = document.querySelectorAll('.accordion-button');
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         const content = button.nextElementSibling;
         const isOpen = !content.classList.contains('hidden');
-        // Close all other accordions
         document.querySelectorAll('.accordion-content').forEach(c => {
           c.classList.add('hidden');
           c.classList.remove('open');
         });
-        // Toggle current accordion
         if (!isOpen) {
           content.classList.remove('hidden');
           content.classList.add('open');
         }
       });
+    });
+
+    // Shopping list and video dialog functionality
+    const dialog = document.getElementById('shoppingListDialog');
+    const dialogTitle = document.getElementById('dialogTitle');
+    const shoppingListContent = document.getElementById('shoppingListContent');
+    const youtubeLink = document.getElementById('youtubeLink');
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const closeDialogButton = document.getElementById('closeDialog');
+    const mealOptions = document.querySelectorAll('.meal-option');
+
+    mealOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const ingredients = option.getAttribute('data-ingredients').split(', ');
+        const youtubeUrl = option.getAttribute('data-youtube');
+        const mealName = option.textContent.split(':')[0];
+        dialogTitle.textContent = mealName;
+        shoppingListContent.innerHTML = ingredients.map(ingredient => `<li><i class="fa-solid fa-check text-green-600 mr-2"></i>${ingredient}</li>`).join('');
+        youtubeLink.href = youtubeUrl;
+        youtubeLink.textContent = `View ${mealName} Recipe on YouTube`;
+        // Show shopping list tab by default
+        tabs.forEach(tab => tab.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.querySelector('.tab[data-tab="shopping-list"]').classList.add('active');
+        document.getElementById('shopping-list').classList.add('active');
+        dialog.showModal();
+      });
+    });
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+      });
+    });
+
+    closeDialogButton.addEventListener('click', () => {
+      dialog.close();
+    });
+
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        dialog.close();
+      }
     });
   </script>
 </body>
